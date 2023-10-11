@@ -10,6 +10,7 @@
 #include "WorldTransform.h"
 #include "Hammer.h"
 #include "Enemy.h"
+#include <memory>
 
 /// <summary>
 /// ゲームシーン
@@ -49,6 +50,11 @@ private: // メンバ変数
 
 	/// <summary>
 	/// ゲームシーン用
+	// テクスチャハンドル
+	uint32_t textureHandle_ = 0;
+	//テクスチャハンドル
+	uint32_t hammerTextureHandle_ = 0;
+
 	//ワールドトランスフォーム
 	WorldTransform worldTransform_;
 	//ビューポートプロジェクション
@@ -57,6 +63,10 @@ private: // メンバ変数
 	Hammer* hammer_ = nullptr;
 	//敵の読み込み
 	Enemy* enemy_ = nullptr;
+	// 3Dモデル
+	Model* model_ = nullptr;
+	//ハンマーの3D描画
+	Model* hammerModel_ = nullptr;
 
 	/// </summary>
 };

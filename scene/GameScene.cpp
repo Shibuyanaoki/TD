@@ -12,6 +12,14 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
+	// ファイル名を指定してテクスチャを読み込む
+	textureHandle_ = TextureManager::Load("sample.png"); 
+	hammerTextureHandle_ = TextureManager::Load("white1x1.png");
+
+
+	// 3Dモデルの生成
+	model_ = Model::Create();
+	hammerModel_ = Model::Create();
 	//ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	//ビューポートプロジェクションの初期化
@@ -20,18 +28,22 @@ void GameScene::Initialize() {
 	hammer_ = new Hammer;
 	//敵の生成
 	enemy_ = new Enemy;
+
+
+	Vector3 HammerPosition = {10, 10, 10};
 	//ハンマーの初期化
-	hammer_->Initialize();
+	hammer_->Initialize(hammerModel_,hammerTextureHandle_,HammerPosition);
 	//敵の初期化
 	enemy_->Initialize();
 
 }
 
 void GameScene::Update() {
+	
 	//ハンマーの更新
-	hammer_->Updata();
+	hammer_->Update();
 	//敵の更新
-	enemy_->Updata();
+	enemy_->Update();
 
 }
 
@@ -62,8 +74,12 @@ void GameScene::Draw() {
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
 	
-	//ハンマーの描画
-	hammer_->Draw();
+	
+	// ハンマーの描画
+	hammer_->Draw(viewProjection_);
+
+	// ステージの描画
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

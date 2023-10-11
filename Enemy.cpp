@@ -4,6 +4,6 @@
 
 void Enemy::Initialize() {}
 
-void Enemy::Updata() {}
+void Enemy::Update() {}
 
 void Enemy::Draw() {}

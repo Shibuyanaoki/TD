@@ -14,11 +14,11 @@ public:
 
 	Hammer();
 
-	void Initialize();
+	void Initialize(Model* model, uint32_t textureHandle, Vector3 position);
 
-	void Updata();
+	void Update();
 
-	void Draw();
+	void Draw(ViewProjection viewProjection_);
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -30,8 +30,6 @@ private:
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
-	// ビューポートプロジェクション
-	ViewProjection viewProjection_;
 
 	//3Dモデル
 	Model* model_ = nullptr;

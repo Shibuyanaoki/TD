@@ -12,7 +12,7 @@ class Enemy {
 public:
 	void Initialize();
 
-	void Updata();
+	void Update();
 
 	void Draw();
 
