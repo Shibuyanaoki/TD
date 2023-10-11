@@ -27,7 +27,7 @@ void Hammer::Update() {
 
 	Vector3 move = {0, 0, 0};
 
-	const float kSpeed = 0.5;
+	//const float kSpeed = 0.5;
 
 	/*if (input_->PushKey(DIK_LEFT)) {
 		move.x -= kSpeed;
@@ -37,7 +37,9 @@ void Hammer::Update() {
 		move.x += kSpeed;
 	}*/
 
-
+	if (input_->PushKey(DIK_SPACE)) {
+		move.y += 2;
+	}
 
 	worldTransform_.translation_ = move;
 	

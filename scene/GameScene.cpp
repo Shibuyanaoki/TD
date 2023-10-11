@@ -79,7 +79,7 @@ void GameScene::Draw() {
 	hammer_->Draw(viewProjection_);
 
 	// ステージの描画
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
