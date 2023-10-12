@@ -15,11 +15,13 @@ void GameScene::Initialize() {
 	// ファイル名を指定してテクスチャを読み込む
 	textureHandle_ = TextureManager::Load("sample.png"); 
 	hammerTextureHandle_ = TextureManager::Load("white1x1.png");
+	enemyTextureHandle_ = TextureManager::Load("tex1.png");
 
 
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	hammerModel_ = Model::Create();
+	enemyModel_ = Model::Create();
 	//ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	//ビューポートプロジェクションの初期化
@@ -29,12 +31,14 @@ void GameScene::Initialize() {
 	//敵の生成
 	enemy_ = new Enemy;
 
-
-	Vector3 HammerPosition = {10, 10, 10};
+	//ハンマーの初期ポジション
+	Vector3 hammerPosition = {10, 10, 10};
+	//敵の初期ポジション
+	Vector3 enemyPosition = {0, 0, 0};
 	//ハンマーの初期化
-	hammer_->Initialize(hammerModel_,hammerTextureHandle_,HammerPosition);
+	hammer_->Initialize(hammerModel_,hammerTextureHandle_,hammerPosition);
 	//敵の初期化
-	enemy_->Initialize();
+	enemy_->Initialize(enemyModel_,enemyTextureHandle_,enemyPosition);
 
 }
 
@@ -78,6 +82,9 @@ void GameScene::Draw() {
 	// ハンマーの描画
 	hammer_->Draw(viewProjection_);
 
+	//敵の描画
+	enemy_->Draw(viewProjection_);
+
 	// ステージの描画
 	//model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
@@ -97,4 +104,14 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::CheckAllCollisions() {
+
+	//判定対象AとBの座標
+	Vector3 posA, posB;
+
+	//自キャラリストの取得
+	
+
 }

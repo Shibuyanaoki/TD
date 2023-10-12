@@ -18,7 +18,11 @@ public:
 
 	void Update();
 
-	void Draw(ViewProjection viewProjection_);
+	void Draw(ViewProjection viewProjection);
+
+	Vector3 GetWorldPosition();
+
+	void OnColllision();
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;

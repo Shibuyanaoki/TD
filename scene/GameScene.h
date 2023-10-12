@@ -43,6 +43,8 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void CheckAllCollisions();
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -52,8 +54,10 @@ private: // メンバ変数
 	/// ゲームシーン用
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
-	//テクスチャハンドル
+	//ハンマーのテクスチャハンドル
 	uint32_t hammerTextureHandle_ = 0;
+	//敵のテクスチャハンドル
+	uint32_t enemyTextureHandle_ = 0;
 
 	//ワールドトランスフォーム
 	WorldTransform worldTransform_;
@@ -67,6 +71,7 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 	//ハンマーの3D描画
 	Model* hammerModel_ = nullptr;
-
+	//敵の3D描画
+	Model* enemyModel_ = nullptr;
 	/// </summary>
 };

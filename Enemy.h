@@ -10,16 +10,23 @@
 class Enemy {
 
 public:
-	void Initialize();
+	void Initialize(Model* model, uint32_t textureHandle, Vector3 position);
 
 	void Update();
 
-	void Draw();
+	void Draw(ViewProjection viewProjection);
+
+	Vector3 GetWorldPosition();
+
+	void OnColllision();
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
+	WorldTransform worldTransform_;
+	
 	uint32_t textureHandle_ = 0;
+	Model* model_ = nullptr;
 };
