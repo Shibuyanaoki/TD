@@ -1,23 +1,19 @@
-﻿#include "Enemy.h"
+﻿#include "Bouring.h"
 #include "TextureManager.h"
 #include "iostream"
 #include <cassert>
 
-Enemy::Enemy() {}
-
-Enemy::~Enemy() {}
-
-void Enemy::Initialize(Model* model, Vector3 position) {
+void Bouring::Initialize(Model* model, Vector3 position) {
 	assert(model);
 
 	worldTransform_.Initialize();
 	model_ = model;
 	worldTransform_.translation_ = position;
 
-	worldTransform_.scale_ = {4.0f, 4.0f, 4.0f};
+	worldTransform_.scale_ = {8.0f, 8.0f, 8.0f};
 }
 
-void Enemy::Update() {
+void Bouring::Update() {
 
 	Vector3 move = {0, 0, 0};
 
@@ -27,9 +23,9 @@ void Enemy::Update() {
 	const float kMoveLimitX = 60;
 	const float kMoveLimitY = 19;
 
-	worldTransform_.rotation_.y += 0.01f;
-
 	move.x = -kSpeed;
+
+	worldTransform_.rotation_.y += 0.01f;
 
 	// 範囲を超えない処理
 	worldTransform_.translation_.x = max(worldTransform_.translation_.x, -kMoveLimitX);
@@ -41,8 +37,8 @@ void Enemy::Update() {
 	worldTransform_.translation_.x += move.x;
 	worldTransform_.translation_.y += move.y;
 	worldTransform_.translation_.z += move.z;
-	
-	//敵が左左端に行ったらdelete
+
+	// 敵が左端に行ったらdelete
 	if (worldTransform_.translation_.x <= -kMoveLimitX) {
 		isDead_ = true;
 	}
@@ -51,11 +47,9 @@ void Enemy::Update() {
 
 }
 
-void Enemy::Draw(ViewProjection viewProjection) { model_->Draw(worldTransform_, viewProjection); }
+void Bouring::Draw(ViewProjection viewProjection) { model_->Draw(worldTransform_, viewProjection); }
 
-Vector3 Enemy::GetWorldPosition() {
-
-	// ワールド座標を入れる変数
+Vector3 Bouring::GetWorldPosition() {
 	Vector3 worldPos;
 
 	// ワールド行列の平行移動成分を取得(ワールド座標)
@@ -66,4 +60,4 @@ Vector3 Enemy::GetWorldPosition() {
 	return worldPos;
 }
 
-void Enemy::OnCollision() { isDead_ = true; }
+void Bouring::OnCollision() { isDead_ = true; }

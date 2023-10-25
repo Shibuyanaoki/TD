@@ -22,7 +22,11 @@ public:
 
 	Vector3 GetWorldPosition();
 
-	void OnColllision();
+	void OnCollision();
+
+	bool IsDead() const { return isDead_; }
+
+	float GetRadius() { return radius_; }
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -37,6 +41,10 @@ private:
 
 	//3Dモデル
 	Model* model_ = nullptr;
-	
-
+	// デスフラグ
+	bool isDead_ = false;
+	//スペースを押したかのフラグ
+	bool flag_ = false;
+	//ハンマーの半径
+	float radius_ = 1.5f;
 };

@@ -4,10 +4,11 @@
 #include "GameScene.h"
 #include "ImGuiManager.h"
 #include "PrimitiveDrawer.h"
+#include "Scene.h"
+#include "ScoreResultScene.h"
 #include "TextureManager.h"
+#include "TitleScene.h"
 #include "WinApp.h"
-
-//さんっっじょう！！！！！！！！！
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -19,6 +20,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	AxisIndicator* axisIndicator = nullptr;
 	PrimitiveDrawer* primitiveDrawer = nullptr;
 	GameScene* gameScene = nullptr;
+	TitleScene* titleScene = nullptr;
+	ScoreResultScene* scoreResultScene = nullptr;
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
@@ -63,6 +66,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
+	// タイトルシーンの初期化
+	titleScene = new TitleScene;
+	titleScene->Initialize();
+
+	// スコアリザルトシーンの初期化
+	scoreResultScene = new ScoreResultScene;
+	scoreResultScene->Initialize();
+
+	Scene scene = Scene::TITLE;
+
 	// メインループ
 	while (true) {
 		// メッセージ処理
@@ -74,8 +87,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		imguiManager->Begin();
 		// 入力関連の毎フレーム処理
 		input->Update();
-		// ゲームシーンの毎フレーム処理
-		gameScene->Update();
+
+		switch (scene) {
+
+		case Scene::TITLE:
+
+			titleScene->Update();
+
+			if (titleScene->IsSceneEnd() == true) {
+				scene = titleScene->NextScene();
+			}
+
+			break;
+
+		case Scene::GAME:
+
+			// ゲームシーンの毎フレーム処理
+			gameScene->Update();
+
+			break;
+
+		case Scene::RESULT:
+
+			scoreResultScene->Update();
+
+			if (scoreResultScene->IsSceneEnd() == true) {
+				scene = scoreResultScene->NextScene();
+			}
+		}
+
 		// 軸表示の更新
 		axisIndicator->Update();
 		// ImGui受付終了
@@ -83,8 +123,26 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		// 描画開始
 		dxCommon->PreDraw();
-		// ゲームシーンの描画
-		gameScene->Draw();
+
+		switch (scene) {
+		case Scene::TITLE:
+			titleScene->Draw();
+
+			break;
+
+		case Scene::GAME:
+
+			// ゲームシーンの描画
+			gameScene->Draw();
+
+			break;
+
+		case Scene::RESULT:
+			scoreResultScene->Draw();
+
+			break;
+		}
+
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット

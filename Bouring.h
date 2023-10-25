@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "Input.h"
@@ -7,13 +8,11 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-class Enemy {
+
+
+class Bouring {
 
 public:
-	Enemy();
-
-	~Enemy();
-
 	void Initialize(Model* model, Vector3 position);
 
 	void Update();
@@ -26,7 +25,7 @@ public:
 
 	bool IsDead() const { return isDead_; }
 
-	float GetRadius() { return radius; }
+	float GetRadius() { return radius_; }
 
 private:
 	DirectXCommon* dxCommon_ = nullptr;
@@ -39,6 +38,7 @@ private:
 	Model* model_ = nullptr;
 	// デスフラグ
 	bool isDead_ = false;
+
 	// 敵の半径
-	float radius = 4.0f;
+	float radius_ = 0.5f;
 };

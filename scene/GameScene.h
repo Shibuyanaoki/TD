@@ -1,16 +1,19 @@
 #pragma once
 
 #include "Audio.h"
+#include "DebugCamera.h"
 #include "DirectXCommon.h"
+#include "Enemy.h"
+#include "Hammer.h"
+#include "Bouring.h"
 #include "Input.h"
 #include "Model.h"
 #include "SafeDelete.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Hammer.h"
-#include "Enemy.h"
-#include <memory>
+
+#include <list>
 
 /// <summary>
 /// ゲームシーン
@@ -43,7 +46,39 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 当たり判定
+	/// </summary>
 	void CheckAllCollisions();
+
+	/// <summary>
+	/// 敵を複数生成する処理
+	/// </summary>
+	/// <param name="Position"></param>
+	void EnemyGenerate(Vector3 Position);
+
+	/// <summary>
+	/// ボウリングを複数生成する処理
+	/// </summary>
+	/// <param name="Position"></param>
+	void BouringGenerate(Vector3 Position);
+
+	/// <summary>
+	/// スコアの描画処理
+	/// </summary>
+	void GamePlayDraw2DNear();
+
+	/// <summary>
+	/// スコアの計算と描画処理
+	/// </summary>
+	void DrawScore();
+
+	/// <summary>
+	/// デバッグカメラ有効
+	/// </summary>
+	bool isDebugCameraActive_ = false;
+
+	int GetGameScore() { return gameScore; };
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -54,24 +89,55 @@ private: // メンバ変数
 	/// ゲームシーン用
 	// テクスチャハンドル
 	uint32_t textureHandle_ = 0;
-	//ハンマーのテクスチャハンドル
+	// ハンマーのテクスチャハンドル
 	uint32_t hammerTextureHandle_ = 0;
-	//敵のテクスチャハンドル
-	uint32_t enemyTextureHandle_ = 0;
+	// サウンドデータハンドル
+	uint32_t soundDataHandle_ = 0;
+	//背景
+	uint32_t haikeiTextureHandle_ = 0;
 
-	//ワールドトランスフォーム
+	//背景スプライト
+	Sprite* haikei_ = nullptr;
+
+	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
-	//ビューポートプロジェクション
+	// ビューポートプロジェクション
 	ViewProjection viewProjection_;
-	// ハンマー読み込み
+	// ハンマー
 	Hammer* hammer_ = nullptr;
-	//敵の読み込み
+	// 敵
 	Enemy* enemy_ = nullptr;
+	//ボーリング
+	Bouring* bouring_ = nullptr;
 	// 3Dモデル
 	Model* model_ = nullptr;
-	//ハンマーの3D描画
+	// ハンマーの3Dモデル
 	Model* hammerModel_ = nullptr;
-	//敵の3D描画
+	// 敵の3Dモデル
 	Model* enemyModel_ = nullptr;
+	//ボウリングの3Dモデル
+	Model* bouringModel_ = nullptr;
+	// デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
+	//敵のリスト
+	std::list<Enemy*> enemys_;
+	//ボウリング玉のリスト
+	std::list<Bouring*> bourings_;
+	//敵の生成するための時間
+	int enemyTimer = 0;
+	//ボウリングの生成時間
+	int bouringTimer = 0;
+	//ゲーム時間
+	//const int gameTimer
+
+	// ナンバー
+	uint32_t textureHandleNumber = 0;
+	Sprite* spriteNumber_[4] = {};
+
+	// スコア
+	uint32_t textureHandleSCORE = 0;
+	Sprite* spriteScore = {};
+	int gameScore = 0;
+
 	/// </summary>
 };
